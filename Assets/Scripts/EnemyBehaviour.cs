@@ -10,16 +10,15 @@ public class EnemyBehaviour : MonoBehaviour
 {
     private bool _hasSpawn;
     private MoveBehaviour _moveBehaviour;
-    private WeaponBehaviour[] _weapons;
+    private WeaponBehaviour _weapon;
     private Collider2D _colliderComponent;
     private SpriteRenderer _rendererComponent;
+    private float _frozenTimeLeft;
 
     private void Awake()
     {
-        // Retrieve the weapon only once
-        _weapons = GetComponentsInChildren<WeaponBehaviour>();
+        _weapon = GetComponentInChildren<WeaponBehaviour>();
 
-        // Retrieve scripts to disable when not spawn
         _moveBehaviour = GetComponent<MoveBehaviour>();
 
         _colliderComponent = GetComponent<Collider2D>();
@@ -27,26 +26,18 @@ public class EnemyBehaviour : MonoBehaviour
         _rendererComponent = GetComponent<SpriteRenderer>();
     }
 
-    // 1 - Disable everything
     private void Start()
     {
         _hasSpawn = false;
 
         // Disable everything
-        // -- collider
         _colliderComponent.enabled = false;
-        // -- Moving
         _moveBehaviour.enabled = false;
-        // -- Shooting
-        foreach (var weapon in _weapons)
-        {
-            weapon.enabled = false;
-        }
+        _weapon.enabled = false;
     }
 
-    void Update()
+    private void Update()
     {
-        // 2 - Check if the enemy has spawned.
         if (_hasSpawn == false)
         {
             if (_rendererComponent.IsVisibleFrom(Camera.main))
@@ -56,17 +47,21 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
-            // Auto-fire
-            foreach (var weapon in _weapons)
+            if (_frozenTimeLeft > 0)
             {
-                if (weapon != null && weapon.enabled && weapon.CanAttack)
+                _frozenTimeLeft -= Time.deltaTime;
+                if (_frozenTimeLeft <= 0)
                 {
-                    weapon.Attack(true);
-                    //SoundEffectsHelper.Instance.MakeEnemyShotSound();
+                    _moveBehaviour.Unpause();
+                    _weapon.enabled = true;
                 }
             }
 
-            // 4 - Out of the camera ? Destroy the game object.
+            if (_weapon != null && _weapon.enabled && _weapon.CanAttack)
+            {
+                _weapon.Attack(true, transform.position);
+            }
+
             if (_rendererComponent.transform.position.x < Camera.main.transform.position.x &&
                 _rendererComponent.IsVisibleFrom(Camera.main) == false)
             {
@@ -75,20 +70,25 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    // 3 - Activate itself.
     private void Spawn()
     {
         _hasSpawn = true;
 
         // Enable everything
-        // -- Collider
         _colliderComponent.enabled = true;
-        // -- Moving
         _moveBehaviour.enabled = true;
-        // -- Shooting
-        foreach (var weapon in _weapons)
+        _weapon.enabled = true;
+    }
+
+    public void Freeze(float seconds, AudioClip freezeClip)
+    {
+        // TODO: display frozen state
+        _frozenTimeLeft = seconds;
+        _moveBehaviour.Pause();
+        _weapon.enabled = false;
+        if (freezeClip != null)
         {
-            weapon.enabled = true;
+            SoundHelper.Instance.GetMainSource().PlayOneShot(freezeClip);
         }
     }
 }

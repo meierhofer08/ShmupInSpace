@@ -5,26 +5,11 @@ using UnityEngine;
 /// </summary>
 public class WeaponBehaviour : MonoBehaviour
 {
-    //--------------------------------
-    // 1 - Designer variables
-    //--------------------------------
-
-    /// <summary>
-    /// Projectile prefab for shooting
-    /// </summary>
-    public Transform shotPrefab;
-
-    /// <summary>
-    /// Cooldown in seconds between two shots
-    /// </summary>
-    public float shootingRate = 0.25f;
+    [SerializeField] private Transform shotPrefab;
+    [SerializeField] private float shootingRate = 0.25f;
 
     [SerializeField] private AudioClip shotClip;
     [SerializeField] private float shotVolume = 0.6F;
-
-    //--------------------------------
-    // 2 - Cooldown
-    //--------------------------------
 
     private float _shootCooldown;
 
@@ -41,14 +26,10 @@ public class WeaponBehaviour : MonoBehaviour
         }
     }
 
-    //--------------------------------
-    // 3 - Shooting from another script
-    //--------------------------------
-
     /// <summary>
     /// Create a new projectile if possible
     /// </summary>
-    public void Attack(bool isEnemy)
+    public void Attack(bool isEnemy, Vector3 position)
     {
         if (!CanAttack)
         {
@@ -57,13 +38,9 @@ public class WeaponBehaviour : MonoBehaviour
 
         _shootCooldown = shootingRate;
 
-        // Create a new shot
         var shotTransform = Instantiate(shotPrefab);
+        shotTransform.position = position;
 
-        // Assign position
-        shotTransform.position = transform.position;
-
-        // The is enemy property
         var shot = shotTransform.gameObject.GetComponent<ShotBehaviour>();
         if (shot != null)
         {
@@ -74,12 +51,12 @@ public class WeaponBehaviour : MonoBehaviour
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(shotClip, shotVolume);
         }
-        
+
         // Make the weapon shot always towards it
         var move = shotTransform.gameObject.GetComponent<MoveBehaviour>();
         if (move != null)
         {
-            move.direction = transform.right; // towards in 2D space is the right of the sprite
+            move.direction = transform.right;
         }
     }
 

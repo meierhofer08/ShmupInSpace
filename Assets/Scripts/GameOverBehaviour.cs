@@ -7,20 +7,17 @@ using UnityEngine.UI;
 /// </summary>
 public class GameOverBehaviour : MonoBehaviour
 {
-    private Button[] buttons;
+    private Button[] _buttons;
 
-    void Awake()
+    private void Awake()
     {
-        // Get the buttons
-        buttons = GetComponentsInChildren<Button>();
-
-        // Disable them
+        _buttons = GetComponentsInChildren<Button>();
         HideButtons();
     }
 
-    public void HideButtons()
+    private void HideButtons()
     {
-        foreach (var b in buttons)
+        foreach (var b in _buttons)
         {
             b.gameObject.SetActive(false);
         }
@@ -28,7 +25,7 @@ public class GameOverBehaviour : MonoBehaviour
 
     public void ShowButtons()
     {
-        foreach (var b in buttons)
+        foreach (var b in _buttons)
         {
             b.gameObject.SetActive(true);
         }
@@ -36,13 +33,11 @@ public class GameOverBehaviour : MonoBehaviour
 
     public void ExitToMenu()
     {
-        // Reload the level
         SceneManager.LoadScene("Menu");
     }
 
     public void RestartGame()
     {
-        // Reload the level
         SceneManager.LoadScene("Stage1");
     }
 }

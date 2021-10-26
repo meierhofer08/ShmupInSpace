@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -12,8 +10,7 @@ public class SpecialEffectsHelper : MonoBehaviour
     /// </summary>
     public static SpecialEffectsHelper Instance;
 
-    public ParticleSystem smokeEffect;
-    public ParticleSystem fireEffect;
+    [SerializeField] private ParticleSystem fireEffect;
 
     private void Awake()
     {
@@ -32,34 +29,20 @@ public class SpecialEffectsHelper : MonoBehaviour
     /// <param name="position"></param>
     public void Explosion(Vector3 position)
     {
-        // Smoke on the water
-        instantiate(smokeEffect, position);
-
-        // Tu tu tu, tu tu tudu
-
-        // Fire in the sky
-        instantiate(fireEffect, position);
+        Instantiate(fireEffect, position);
     }
 
-    /// <summary>
-    /// Instantiate a Particle system from prefab
-    /// </summary>
-    /// <param name="prefab"></param>
-    /// <returns></returns>
-    private ParticleSystem instantiate(ParticleSystem prefab, Vector3 position)
+    private static void Instantiate(ParticleSystem prefab, Vector3 position)
     {
-        ParticleSystem newParticleSystem = Instantiate(
+        var newParticleSystem = Instantiate(
             prefab,
             position,
             Quaternion.identity
-        ) as ParticleSystem;
-
-        // Make sure it will be destroyed
-        Destroy(
-            newParticleSystem.gameObject,
-            newParticleSystem.startLifetime
         );
 
-        return newParticleSystem;
+        Destroy(
+            newParticleSystem.gameObject,
+            newParticleSystem.main.startLifetime.constant
+        );
     }
 }

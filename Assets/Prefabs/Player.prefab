@@ -327,6 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 15, y: 15}
+  powerUpClip: {fileID: 8300000, guid: 2651b5bb1c2120e45a4de0932c47f957, type: 3}
 --- !u!114 &-5494826137437178440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +343,7 @@ MonoBehaviour:
   hp: 1
   isEnemy: 0
   deathClip: {fileID: 8300000, guid: e6c6d6d9610bdd6468bfdd8364586ea7, type: 3}
+  deathVolume: 0.6
 --- !u!1 &5392875777121694386
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,3 +390,4 @@ MonoBehaviour:
   shotPrefab: {fileID: 4790022585642215778, guid: ec844d0235b04bb4aa650fb5794d350f, type: 3}
   shootingRate: 0.25
   shotClip: {fileID: 8300000, guid: 09da2a8d0f97f994bb79411387c2f610, type: 3}
+  shotVolume: 0.6

@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -8,17 +5,16 @@ using UnityEngine;
 /// </summary>
 public class HealthBehaviour : MonoBehaviour
 {
-    /// <summary>
-    /// Total hitpoints
-    /// </summary>
-    public int hp = 1;
-
-    /// <summary>
-    /// Enemy or player?
-    /// </summary>
+    [SerializeField] private int hp = 1;
     [SerializeField] private bool isEnemy = true;
 
     [SerializeField] private AudioClip deathClip;
+    [SerializeField] private float deathVolume = 0.6F;
+
+    public void Kill()
+    {
+        Damage(hp);
+    }
 
     /// <summary>
     /// Inflicts damage and check if the object should be destroyed
@@ -28,36 +24,30 @@ public class HealthBehaviour : MonoBehaviour
     {
         hp -= damageCount;
 
-        if (hp <= 0)
+        if (hp > 0)
         {
-            // 'Splosion!
-            SpecialEffectsHelper.Instance.Explosion(transform.position);
-            
-            // Boom!
-            if (deathClip != null)
-            {
-                SoundHelper.Instance.GetMainSource().PlayOneShot(deathClip, 0.6F);
-            }
-            
-            // Dead!
-            Destroy(gameObject);
+            return;
         }
+
+        SpecialEffectsHelper.Instance.Explosion(transform.position);
+        if (deathClip != null)
+        {
+            SoundHelper.Instance.GetMainSource().PlayOneShot(deathClip, deathVolume);
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        // Is this a shot?
-        var shot = otherCollider.gameObject.GetComponent<ShotBehaviour>();
-        if (shot != null)
+        var shot = otherCollider.gameObject.GetComponent<BaseShotBehaviour>();
+        if (shot == null || shot.isEnemyShot == isEnemy)
         {
-            // Avoid friendly fire
-            if (shot.isEnemyShot != isEnemy)
-            {
-                Damage(shot.damage);
-
-                // Destroy the shot
-                Destroy(shot.gameObject); // Remember to always target the game object, otherwise you will just remove the script
-            }
+            return;
         }
+
+        shot.AdditionalShotBehaviour(gameObject);
+        Damage(shot.damage);
+        Destroy(shot.gameObject);
     }
 }

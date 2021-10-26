@@ -1,27 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 /// <summary>
 /// Player controller and behavior
 /// </summary>
-
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerBehaviour : MonoBehaviour
 {
-    /// <summary>
-    /// 1 - The speed of the ship
-    /// </summary>
     [SerializeField] private Vector2 speed = new Vector2(50, 50);
+    [SerializeField] private AudioClip powerUpClip;
 
-    // 2 - Store the movement and the component
     private Vector2 _movement;
     private Rigidbody2D _rigidbodyComponent;
+
+    private WeaponBehaviour _standardWeapon;
+    private GameObject _collectedWeapon;
 
     private void Start()
     {
         // 5 - Get the component and store the reference
         _rigidbodyComponent = GetComponent<Rigidbody2D>();
+        _standardWeapon = GetComponentInChildren<WeaponBehaviour>();
     }
 
     private void Update()
@@ -36,21 +35,13 @@ public class PlayerBehaviour : MonoBehaviour
             speed.y * inputY);
 
         // 5 - Shooting
-        bool shoot = Input.GetButton("Fire1");
-        shoot |= Input.GetButton("Fire2");
-        // Careful: For Mac users, ctrl + arrow is a bad idea
-
-        if (shoot)
+        TryShoot("Fire1", _standardWeapon);
+        if (_collectedWeapon != null)
         {
-            var weapon = GetComponentInChildren<WeaponBehaviour>();
-            if (weapon != null)
-            {
-                // false because the player is not an enemy
-                weapon.Attack(false);
-            }
+            TryShoot("Fire2", _collectedWeapon.GetComponent<WeaponBehaviour>());
         }
-        
-        // 6 - Make sure we are not outside the camera bounds
+
+        // Make sure we are not outside the camera bounds
         var dist = (transform.position - Camera.main.transform.position).z;
 
         var leftBorder = Camera.main.ViewportToWorldPoint(
@@ -76,13 +67,22 @@ public class PlayerBehaviour : MonoBehaviour
         );
     }
 
+    private void TryShoot(string button, WeaponBehaviour weapon)
+    {
+        var shoot = Input.GetButton(button);
+        if (shoot && weapon != null)
+        {
+            weapon.Attack(false, transform.position);
+        }
+    }
+
     private void FixedUpdate()
     {
         // 6 - Move the game object
         _rigidbodyComponent.velocity = _movement;
     }
-    
-    void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         bool damagePlayer = false;
 
@@ -92,7 +92,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             // Kill the enemy
             var enemyHealth = enemy.GetComponent<HealthBehaviour>();
-            if (enemyHealth != null) enemyHealth.Damage(enemyHealth.hp );
+            if (enemyHealth != null) enemyHealth.Kill();
 
             damagePlayer = true;
         }
@@ -104,7 +104,28 @@ public class PlayerBehaviour : MonoBehaviour
             if (playerHealth != null) playerHealth.Damage(1);
         }
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var collectible = other.gameObject.GetComponent<CollectibleBehaviour>();
+        if (collectible == null)
+        {
+            return;
+        }
+
+        if (_collectedWeapon != null)
+        {
+            Destroy(_collectedWeapon);
+        }
+        
+        _collectedWeapon = Instantiate(collectible.CollectibleWeapon);
+        Destroy(other.gameObject);
+        if (powerUpClip != null)
+        {
+            SoundHelper.Instance.GetMainSource().PlayOneShot(powerUpClip);
+        }
+    }
+
     private void OnDestroy()
     {
         // Game Over.
