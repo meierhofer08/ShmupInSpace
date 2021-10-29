@@ -605,7 +605,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 180}
+  m_SizeDelta: {x: 350, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1328462182
 MonoBehaviour:
@@ -645,14 +645,18 @@ MonoBehaviour:
     Music & sound effects by Plus
 
 
-    Assets (unity assetstore)
-    from:
-
-    Tiny Worlds, Ansimuz, EVPO Games, Luiz Melo, DinV Studio, Startled
-    PIXELS
+    Additional sound effects
+    from https://www.zapsplat.com
 
 
-    Laser sprite by Master484'
+    Assets (unity assetstore) from:
+
+    Tiny
+    Worlds, Ansimuz, EVPO Games, Luiz Melo, DinV Studio, Startled PIXELS
+
+
+    Laser
+    sprite by Master484'
 --- !u!222 &1328462183
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -695,11 +699,11 @@ RectTransform:
   m_Father: {fileID: 1942682605}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 83}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -129}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1422265429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -972,7 +976,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1675907730
 RectTransform:
   m_ObjectHideFlags: 0
@@ -992,7 +996,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 200}
+  m_SizeDelta: {x: 350, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1675907731
 MonoBehaviour:
@@ -1066,11 +1070,11 @@ RectTransform:
   m_Father: {fileID: 1942682605}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 37.399994}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -174.6}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1697505282
 MonoBehaviour:
   m_ObjectHideFlags: 0

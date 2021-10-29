@@ -51,6 +51,13 @@ public class EnemyBehaviour : MonoBehaviour
         }
         else
         {
+            if (transform.position.x < Camera.main.transform.position.x &&
+                !_rendererComponent.IsVisibleFrom(Camera.main))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
             if (_frozenTimeLeft > 0)
             {
                 _frozenTimeLeft -= Time.deltaTime;
@@ -102,7 +109,7 @@ public class EnemyBehaviour : MonoBehaviour
         ScoreBehaviour.Instance.IncreaseScore(scoreForFreeze);
         if (freezeClip != null)
         {
-            SoundHelper.Instance.GetMainSource().PlayOneShot(freezeClip);
+            SoundHelper.Instance.GetMainSource().PlayOneShot(freezeClip, 0.6F);
         }
     }
 }

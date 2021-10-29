@@ -40,7 +40,6 @@ public class CollectibleGenerator : MonoBehaviour
         var y = Random.Range(spawnYMin, spawnYMax);
         var index = Random.Range(0, collectiblePrefabs.Length);
         var spawnPosition = new Vector2(x, y);
-        Debug.Log($"Spawning collectible at {spawnPosition}");
         var enemy = Instantiate(collectiblePrefabs[index], this.transform);
         enemy.position = spawnPosition;
     }

@@ -135,10 +135,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2c8a1bd2493c9d4097dedca6221ea7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 1
+  hp: 2
   isEnemy: 1
   scoreForKill: 100
-  deathClip: {fileID: 8300000, guid: e6c6d6d9610bdd6468bfdd8364586ea7, type: 3}
+  deathClip: {fileID: 8300000, guid: 8784fa4d01cff6f478500f2cb7c1589e, type: 3}
   deathVolume: 0.6
 --- !u!114 &420171380
 MonoBehaviour:
@@ -212,4 +212,4 @@ MonoBehaviour:
   shootingRate: 4
   boundShots: 0
   shotClip: {fileID: 8300000, guid: a492b8c35f09ba44880c669ea4710a0d, type: 3}
-  shotVolume: 0.3
+  shotVolume: 1

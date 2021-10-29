@@ -40,4 +40,9 @@ public class ScoreBehaviour : MonoBehaviour
             _currentScore += amount;
         }
     }
+
+    public int GetCurrentScore()
+    {
+        return _currentScore;
+    }
 }

@@ -10,8 +10,17 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField] private float spawnYMin = -4.8F;
 
     [SerializeField] private float initialSpawnDelay = 2.0F;
-    [SerializeField] private float minEnemyDelay = 1.0F;
-    [SerializeField] private float maxEnemyDelay = 3.0F;
+    [SerializeField] private float stage1MinEnemyDelay = 1.0F;
+    [SerializeField] private float stage1MaxEnemyDelay = 3.0F;
+
+    [SerializeField] private int stage2Threshold = 1000;
+    [SerializeField] private float stage2MinEnemyDelay = 1.0F;
+    [SerializeField] private float stage2MaxEnemyDelay = 2.0F;
+
+    [SerializeField] private int stage3Threshold = 3000;
+    [SerializeField] private float stage3MinEnemyDelay = 0.5F;
+    [SerializeField] private float stage3MaxEnemyDelay = 1.5F;
+    
 
     private float _nextSpawnDelay;
 
@@ -29,7 +38,32 @@ public class EnemyGenerator : MonoBehaviour
         }
 
         SpawnEnemy();
-        _nextSpawnDelay = Random.Range(minEnemyDelay, maxEnemyDelay);
+        CalcNextSpawnDelay();
+    }
+
+    private void CalcNextSpawnDelay()
+    {
+        var score = ScoreBehaviour.Instance.GetCurrentScore();
+        
+        float minDelay;
+        float maxDelay;
+        if (score < stage2Threshold)
+        {
+            minDelay = stage1MinEnemyDelay;
+            maxDelay = stage1MaxEnemyDelay;
+        }
+        else if (score < stage3Threshold)
+        {
+            minDelay = stage2MinEnemyDelay;
+            maxDelay = stage2MaxEnemyDelay;
+        }
+        else
+        {
+            minDelay = stage3MinEnemyDelay;
+            maxDelay = stage3MaxEnemyDelay;
+        }
+        
+        _nextSpawnDelay = Random.Range(minDelay, maxDelay);
     }
 
     private void SpawnEnemy()
@@ -39,7 +73,6 @@ public class EnemyGenerator : MonoBehaviour
                 + spawnXOffset;
         var y = Random.Range(spawnYMin, spawnYMax);
         var spawnPosition = new Vector2(x, y);
-        Debug.Log($"Spawning enemy at {spawnPosition}");
         var enemy = Instantiate(enemyPrefab, this.transform);
         enemy.position = spawnPosition;
     }

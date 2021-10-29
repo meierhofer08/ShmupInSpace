@@ -7,30 +7,14 @@ using UnityEngine;
 /// </summary>
 public class ScrollingBehaviour : MonoBehaviour
 {
-    /// <summary>
-    /// Scrolling speed
-    /// </summary>
     [SerializeField] private Vector2 speed = new Vector2(10, 10);
-
-    /// <summary>
-    /// Moving direction
-    /// </summary>
     [SerializeField] private Vector2 direction = new Vector2(-1, 0);
-
-    /// <summary>
-    /// Movement should be applied to camera
-    /// </summary>
     [SerializeField] private bool isLinkedToCamera = false;
-
-    /// <summary>
-    /// Whether elements should be looped
-    /// </summary>
     [SerializeField] private bool isLooping = false;
+    [SerializeField] private float initialLastDistance = 0;
 
-    /// <summary>
-    /// List of children with a renderer.
-    /// </summary>
     private List<SpriteRenderer> _backgroundPart;
+    private float _lastDistance; // Distance from last looped child to its next child
 
     private void Start()
     {
@@ -58,6 +42,7 @@ public class ScrollingBehaviour : MonoBehaviour
         _backgroundPart = _backgroundPart.OrderBy(
             t => t.transform.position.x
         ).ToList();
+        _lastDistance = initialLastDistance;
     }
 
     private void Update()
@@ -95,20 +80,34 @@ public class ScrollingBehaviour : MonoBehaviour
             // Get the last child position.
             var lastChild = _backgroundPart.LastOrDefault();
 
-            Debug.Log($"Placing {firstChild.gameObject.name} after {lastChild.gameObject.name}");
+            //Debug.Log($"Placing {firstChild.gameObject.name} after {lastChild.gameObject.name}");
 
             var lastPosition = lastChild.transform.position;
             var lastSize = (lastChild.bounds.max - lastChild.bounds.min);
 
             // Set the position of the recycled one to be AFTER
             // the last child.
-            firstChild.transform.position = new Vector3(lastPosition.x + lastSize.x, firstChild.transform.position.y,
+            var distanceFromLast = _lastDistance;
+            calcLastDistance();
+            firstChild.transform.position = new Vector3(lastPosition.x + lastSize.x + distanceFromLast, firstChild.transform.position.y,
                 firstChild.transform.position.z);
 
             // Set the recycled child to the last position
             // of the backgroundPart list.
             _backgroundPart.Remove(firstChild);
             _backgroundPart.Add(firstChild);
+        }
+    }
+
+    private void calcLastDistance()
+    {
+        var firstChild = _backgroundPart.FirstOrDefault();
+        var firstSize = firstChild.bounds.max.x - firstChild.bounds.min.x;
+        var secondChild = _backgroundPart[1];
+        _lastDistance = secondChild.transform.position.x - firstSize - firstChild.transform.position.x;
+        if (_lastDistance.AlmostEquals(0F, 0.01))
+        {
+            _lastDistance = 0F;
         }
     }
 }

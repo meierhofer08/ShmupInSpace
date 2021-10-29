@@ -8,10 +8,12 @@ using UnityEngine.UI;
 public class GameOverBehaviour : MonoBehaviour
 {
     private Button[] _buttons;
+    private Text _highscoreText;
 
     private void Awake()
-    {
+    { 
         _buttons = GetComponentsInChildren<Button>();
+        _highscoreText = GameObject.Find("HighscoreText").GetComponent<Text>();
         HideButtons();
     }
 
@@ -21,6 +23,7 @@ public class GameOverBehaviour : MonoBehaviour
         {
             b.gameObject.SetActive(false);
         }
+        _highscoreText.gameObject.SetActive(false);
     }
 
     public void ShowButtons()
@@ -28,6 +31,21 @@ public class GameOverBehaviour : MonoBehaviour
         foreach (var b in _buttons)
         {
             b.gameObject.SetActive(true);
+        }
+        _highscoreText.gameObject.SetActive(true);
+        UpdateHighscoreText();
+    }
+
+    private void UpdateHighscoreText()
+    {
+        var score = ScoreBehaviour.Instance.GetCurrentScore();
+        if (HighscoreBehaviour.Instance.NewHighscore(score))
+        {
+            _highscoreText.text = $"Congrats! New Highscore: {score}";
+        }
+        else
+        {
+            _highscoreText.text = $"Current Highscore: {HighscoreBehaviour.Instance.GetCurrentHighscore()}";
         }
     }
 

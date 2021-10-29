@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4238b123bf974204b8c5b687b9c644bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 10, y: 10}
+  speed: {x: 20, y: 20}
   direction: {x: 1, y: 0}
 --- !u!114 &-3623395188842667392
 MonoBehaviour:
@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   isEnemyShot: 0
+  isSelfDestruct: 0
   freezeTime: 2
   freezeClip: {fileID: 8300000, guid: 9af62f0af6456f9459017dbc989a3731, type: 3}
   frozenColor:
