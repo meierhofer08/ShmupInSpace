@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: {x: 15, y: 15}
-  powerUpClip: {fileID: 8300000, guid: 2651b5bb1c2120e45a4de0932c47f957, type: 3}
+  powerUpClip: {fileID: 8300000, guid: fc05ee597ba40674087465f3ca394b1d, type: 3}
 --- !u!114 &-5494826137437178440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   isEnemy: 0
-  deathClip: {fileID: 8300000, guid: e6c6d6d9610bdd6468bfdd8364586ea7, type: 3}
+  deathClip: {fileID: 8300000, guid: d04a0af05e171e04db1d008f6e55b06e, type: 3}
   deathVolume: 0.6
 --- !u!1 &5392875777121694386
 GameObject:

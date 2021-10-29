@@ -156,7 +156,10 @@ MonoBehaviour:
   damage: 0
   isEnemyShot: 0
   freezeTime: 2
-  freezeClip: {fileID: 8300000, guid: bc9ec0a7333824c48a6bb99fa897838b, type: 3}
+  freezeClip: {fileID: 8300000, guid: 9af62f0af6456f9459017dbc989a3731, type: 3}
+  frozenColor:
+    serializedVersion: 2
+    rgba: 4294944256
 --- !u!61 &-8446792231838805112
 BoxCollider2D:
   m_ObjectHideFlags: 0

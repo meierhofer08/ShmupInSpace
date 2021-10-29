@@ -138,6 +138,7 @@ MonoBehaviour:
   hp: 1
   isEnemy: 1
   deathClip: {fileID: 8300000, guid: e6c6d6d9610bdd6468bfdd8364586ea7, type: 3}
+  deathVolume: 0.6
 --- !u!114 &420171380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,5 +206,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotPrefab: {fileID: 4173579735538888, guid: 7949930a4be82f14497a46200e300772, type: 3}
   shootingRate: 4
-  shotClip: {fileID: 8300000, guid: 7cf7d2d53bedfd945941d0bda700256d, type: 3}
+  shotClip: {fileID: 8300000, guid: a492b8c35f09ba44880c669ea4710a0d, type: 3}
   shotVolume: 0.3

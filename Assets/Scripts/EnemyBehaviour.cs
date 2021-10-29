@@ -13,17 +13,16 @@ public class EnemyBehaviour : MonoBehaviour
     private WeaponBehaviour _weapon;
     private Collider2D _colliderComponent;
     private SpriteRenderer _rendererComponent;
+    private Color _initialColor;
     private float _frozenTimeLeft;
 
     private void Awake()
     {
         _weapon = GetComponentInChildren<WeaponBehaviour>();
-
         _moveBehaviour = GetComponent<MoveBehaviour>();
-
         _colliderComponent = GetComponent<Collider2D>();
-
         _rendererComponent = GetComponent<SpriteRenderer>();
+        _initialColor = _rendererComponent.color;
     }
 
     private void Start()
@@ -50,8 +49,9 @@ public class EnemyBehaviour : MonoBehaviour
             if (_frozenTimeLeft > 0)
             {
                 _frozenTimeLeft -= Time.deltaTime;
-                if (_frozenTimeLeft <= 0)
+                if (_frozenTimeLeft <= 0) // Unfreeze
                 {
+                    _rendererComponent.color = _initialColor;
                     _moveBehaviour.Unpause();
                     _weapon.enabled = true;
                 }
@@ -80,12 +80,12 @@ public class EnemyBehaviour : MonoBehaviour
         _weapon.enabled = true;
     }
 
-    public void Freeze(float seconds, AudioClip freezeClip)
+    public void Freeze(float seconds, AudioClip freezeClip, Color32 frozenColor)
     {
-        // TODO: display frozen state
         _frozenTimeLeft = seconds;
         _moveBehaviour.Pause();
         _weapon.enabled = false;
+        _rendererComponent.color = frozenColor;
         if (freezeClip != null)
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(freezeClip);

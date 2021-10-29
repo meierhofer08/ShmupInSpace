@@ -5,8 +5,6 @@ using UnityEngine;
 /// </summary>
 public abstract class BaseShotBehaviour : MonoBehaviour
 {
-    private const float MaxLifetime = 10;
-
     /// <summary>
     /// Damage inflicted
     /// </summary>
@@ -16,6 +14,15 @@ public abstract class BaseShotBehaviour : MonoBehaviour
     /// Projectile damage player or enemies?
     /// </summary>
     public bool isEnemyShot = false;
+
+    public bool isSelfDestruct = false;
+
+    protected bool triggered;
+
+    public void TriggerShot()
+    {
+        triggered = true;
+    }
 
     public abstract void AdditionalShotBehaviour(GameObject otherObject);
 }

@@ -64,11 +64,10 @@ public class ScrollingBehaviour : MonoBehaviour
     {
         var movement = new Vector3(
             speed.x * direction.x,
-            speed.y * direction.y,
-            0);
+            speed.y * direction.y);
 
         movement *= Time.deltaTime;
-        transform.Translate(movement);
+        transform.Translate(movement, Space.World);
 
         if (isLinkedToCamera)
         {

@@ -29,7 +29,14 @@ public class HealthBehaviour : MonoBehaviour
             return;
         }
 
-        SpecialEffectsHelper.Instance.Explosion(transform.position);
+        if (isEnemy)
+        {
+            SpecialEffectsHelper.Instance.Splat(transform.position);
+        }
+        else
+        {
+            SpecialEffectsHelper.Instance.Explosion(transform.position);
+        }
         if (deathClip != null)
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(deathClip, deathVolume);
@@ -48,6 +55,9 @@ public class HealthBehaviour : MonoBehaviour
 
         shot.AdditionalShotBehaviour(gameObject);
         Damage(shot.damage);
-        Destroy(shot.gameObject);
+        if (!shot.isSelfDestruct)
+        {
+            Destroy(shot.gameObject);
+        }
     }
 }

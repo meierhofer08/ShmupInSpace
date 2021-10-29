@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8485403404470701832}
   - component: {fileID: 8485403404470701833}
   - component: {fileID: 8485403404470701834}
-  - component: {fileID: -2492184577175269066}
   - component: {fileID: 6412358473268789443}
   - component: {fileID: -1826090977096507260}
   m_Layer: 0
@@ -105,22 +104,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &-2492184577175269066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8485403404470701835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4e4096919385f41934eadbb0866660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shotPrefab: {fileID: 7834900920536589810, guid: 4e6d0f4a84c82084e842c9532f5f83ae, type: 3}
-  shootingRate: 1
-  shotClip: {fileID: 8300000, guid: 09da2a8d0f97f994bb79411387c2f610, type: 3}
-  shotVolume: 0.6
 --- !u!61 &6412358473268789443
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -159,4 +142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad75ba69cfe4ec8408891dd3f732cce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollectibleWeapon: {fileID: 4668977435201119741, guid: 327a689921f1caa45b0d02421545c3f6, type: 3}
+  CollectibleWeapon: {fileID: 4668977435201119741, guid: c34c1abaeab83fe4ca571648c459a2c3, type: 3}

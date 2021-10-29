@@ -11,10 +11,10 @@ public class SpecialEffectsHelper : MonoBehaviour
     public static SpecialEffectsHelper Instance;
 
     [SerializeField] private ParticleSystem fireEffect;
+    [SerializeField] private ParticleSystem splatEffect;
 
     private void Awake()
     {
-        // Register the singleton
         if (Instance != null)
         {
             Debug.LogError("Multiple instances of SpecialEffectsHelper!");
@@ -30,6 +30,11 @@ public class SpecialEffectsHelper : MonoBehaviour
     public void Explosion(Vector3 position)
     {
         Instantiate(fireEffect, position);
+    }
+
+    public void Splat(Vector3 position)
+    {
+        Instantiate(splatEffect, position);
     }
 
     private static void Instantiate(ParticleSystem prefab, Vector3 position)

@@ -15,6 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     private WeaponBehaviour _standardWeapon;
     private GameObject _collectedWeapon;
+    private Rigidbody2D _shotRigidbody;
 
     private void Start()
     {
@@ -78,8 +79,13 @@ public class PlayerBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // 6 - Move the game object
         _rigidbodyComponent.velocity = _movement;
+        if (_shotRigidbody != null)
+        {
+            var shotMovement = new Vector2(_movement.x + 1 /* dirty hack to account for player's scrolling */,
+                _movement.y);
+            _shotRigidbody.velocity = shotMovement;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -119,11 +125,20 @@ public class PlayerBehaviour : MonoBehaviour
         }
         
         _collectedWeapon = Instantiate(collectible.CollectibleWeapon);
+        var weaponBehaviour = _collectedWeapon.GetComponent<WeaponBehaviour>();
+        if (weaponBehaviour.boundShots)
+        {
+            weaponBehaviour.SetShotBodyAction(r2d => _shotRigidbody = r2d);
+        }
+        
         Destroy(other.gameObject);
         if (powerUpClip != null)
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(powerUpClip);
         }
+
+        var collectibleRenderer = other.gameObject.GetComponent<SpriteRenderer>();
+        HUDBehaviour.Instance.SetPowerUpImage(collectibleRenderer.color, collectibleRenderer.sprite);
     }
 
     private void OnDestroy()
