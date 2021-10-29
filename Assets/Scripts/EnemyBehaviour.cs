@@ -8,6 +8,10 @@ using UnityEngine;
 /// </summary>
 public class EnemyBehaviour : MonoBehaviour
 {
+    [SerializeField] private float minDelayFirstShot = 0;
+    [SerializeField] private float maxDelayFirstShot = 1;
+    [SerializeField] private int scoreForFreeze = 30;
+
     private bool _hasSpawn;
     private MoveBehaviour _moveBehaviour;
     private WeaponBehaviour _weapon;
@@ -15,6 +19,7 @@ public class EnemyBehaviour : MonoBehaviour
     private SpriteRenderer _rendererComponent;
     private Color _initialColor;
     private float _frozenTimeLeft;
+    private double _delayFirstShot;
 
     private void Awake()
     {
@@ -59,7 +64,14 @@ public class EnemyBehaviour : MonoBehaviour
 
             if (_weapon != null && _weapon.enabled && _weapon.CanAttack)
             {
-                _weapon.Attack(true, transform.position);
+                if (_delayFirstShot > 0)
+                {
+                    _delayFirstShot -= Time.deltaTime;
+                }
+                else
+                {
+                    _weapon.Attack(true, transform.position);
+                }
             }
 
             if (_rendererComponent.transform.position.x < Camera.main.transform.position.x &&
@@ -78,6 +90,7 @@ public class EnemyBehaviour : MonoBehaviour
         _colliderComponent.enabled = true;
         _moveBehaviour.enabled = true;
         _weapon.enabled = true;
+        _delayFirstShot = Random.Range(minDelayFirstShot, maxDelayFirstShot);
     }
 
     public void Freeze(float seconds, AudioClip freezeClip, Color32 frozenColor)
@@ -86,6 +99,7 @@ public class EnemyBehaviour : MonoBehaviour
         _moveBehaviour.Pause();
         _weapon.enabled = false;
         _rendererComponent.color = frozenColor;
+        ScoreBehaviour.Instance.IncreaseScore(scoreForFreeze);
         if (freezeClip != null)
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(freezeClip);

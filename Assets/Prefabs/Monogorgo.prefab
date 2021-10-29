@@ -30,13 +30,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2161864862712218427}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.71, y: -1.61, z: 0}
+  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!212 &7137693719793499231
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4238b123bf974204b8c5b687b9c644bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: {x: 4, y: 4}
+  speed: {x: 4, y: 0}
   direction: {x: -1, y: 0}
 --- !u!114 &3188546975921612677
 MonoBehaviour:
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   isEnemy: 1
+  scoreForKill: 100
   deathClip: {fileID: 8300000, guid: e6c6d6d9610bdd6468bfdd8364586ea7, type: 3}
   deathVolume: 0.6
 --- !u!114 &420171380
@@ -151,6 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d913ee095afe3b408097776008d156b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minDelayFirstShot: 0
+  maxDelayFirstShot: 1.5
+  scoreForFreeze: 30
 --- !u!60 &7382823994277739881
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -206,5 +210,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotPrefab: {fileID: 4173579735538888, guid: 7949930a4be82f14497a46200e300772, type: 3}
   shootingRate: 4
+  boundShots: 0
   shotClip: {fileID: 8300000, guid: a492b8c35f09ba44880c669ea4710a0d, type: 3}
   shotVolume: 0.3

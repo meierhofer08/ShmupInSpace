@@ -7,6 +7,7 @@ public class HealthBehaviour : MonoBehaviour
 {
     [SerializeField] private int hp = 1;
     [SerializeField] private bool isEnemy = true;
+    [SerializeField] private int scoreForKill = 100;
 
     [SerializeField] private AudioClip deathClip;
     [SerializeField] private float deathVolume = 0.6F;
@@ -23,6 +24,10 @@ public class HealthBehaviour : MonoBehaviour
     public void Damage(int damageCount)
     {
         hp -= damageCount;
+        if (!isEnemy)
+        {
+            HealthPanelBehaviour.Instance.SetHealth(hp);
+        }
 
         if (hp > 0)
         {
@@ -32,11 +37,13 @@ public class HealthBehaviour : MonoBehaviour
         if (isEnemy)
         {
             SpecialEffectsHelper.Instance.Splat(transform.position);
+            ScoreBehaviour.Instance.IncreaseScore(scoreForKill);
         }
         else
         {
             SpecialEffectsHelper.Instance.Explosion(transform.position);
         }
+
         if (deathClip != null)
         {
             SoundHelper.Instance.GetMainSource().PlayOneShot(deathClip, deathVolume);
